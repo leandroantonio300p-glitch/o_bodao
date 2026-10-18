@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  CHURRASCARIA OBODÃO – versão refinada
+  Arquivos: index.html (estrutura) | style.css (visual) | script.js (interações)
+  Imagens: pasta /imagens (nomes 01 a 19, sem alterar)
+  NÚMERO DO WHATSAPP: mude UMA vez só, no topo do script.js (const WHATSAPP)
+  =====================================================================
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Churrascaria Obodão – O verdadeiro sabor do churrasco</title>
+  <meta name="description" content="Churrascaria Obodão: carnes na brasa, quentinhas, galeto e delivery. Reserve pelo WhatsApp.">
+  <meta name="theme-color" content="#0a0807">
+
+  <!-- Fontes: Anton (títulos), Kaushan Script (manuscrito), Poppins (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- "defer" = o JS só roda depois da página carregar -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Link para quem navega por teclado pular direto ao conteúdo -->
+  <a class="pular" href="#cardapio">Ir para o cardápio</a>
+
+  <!-- =============== 1. CABEÇALHO =============== -->
+  <!-- Transparente no topo; ganha fundo escuro ao rolar (classe .rolou, via JS) -->
+  <header class="topo" id="topo">
+    <div class="container topo__linha">
+      <a href="#inicio" class="logo" aria-label="Churrascaria Obodão – início">
+        <img src="imagens/02-logo.png" alt="Churrascaria Obodão">
+      </a>
+
+      <nav class="menu" id="menu" aria-label="Menu principal">
+        <a href="#inicio">Início</a>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#contato">Contato</a>
+        <!-- Botão de reserva dentro do menu (aparece no celular aberto) -->
+        <a class="botao menu__reserva" href="#contato">Faça sua reserva</a>
+      </nav>
+
+      <a class="botao topo__reserva" href="#contato">Faça sua reserva</a>
+
+      <!-- Botão hambúrguer (só aparece no celular) -->
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- =============== 2. HERO =============== -->
+    <section id="inicio" class="hero">
+      <!-- Foto de fundo com parallax (JS move a variável --py) -->
+      <div class="hero__fundo" aria-hidden="true"></div>
+      <!-- Faíscas animadas (desenhadas pelo JS neste canvas) -->
+      <canvas class="hero__brasas" id="brasas" aria-hidden="true"></canvas>
+
+      <div class="container hero__conteudo">
+        <p class="hero__selo">Sabor · Tradição · Família</p>
+        <h1>
+          <span class="hero__titulo">Churrascaria</span>
+          <span class="hero__nome">Obodão</span>
+        </h1>
+        <p class="hero__texto">O verdadeiro sabor do churrasco, como deve ser!</p>
+        <div class="hero__acoes">
+          <a class="botao botao--grande" href="#contato">Faça sua reserva</a>
+          <a class="botao botao--vazado botao--grande" href="#cardapio">Ver cardápio</a>
+        </div>
+      </div>
+      <p class="hero__frase" aria-hidden="true">Carne boa<br>é aqui!</p>
+      <a class="hero__descer" href="#atalhos" aria-label="Rolar para baixo"></a>
+    </section>
+
+    <!-- =============== 3. ATALHOS (3 cards do kit) =============== -->
+    <section class="atalhos container" id="atalhos" aria-label="Atalhos">
+      <a href="#cardapio" data-aba-link="almoco"><img src="imagens/14-card-cardapio.jpg" alt="Nosso cardápio" loading="lazy"></a>
+      <a href="#cardapio" data-aba-link="quentinhas"><img src="imagens/15-card-quentinhas.jpg" alt="Quentinhas especiais" loading="lazy"></a>
+      <a href="#cardapio" data-aba-link="delivery"><img src="imagens/16-card-delivery.jpg" alt="Delivery: peça pelo WhatsApp" loading="lazy"></a>
+    </section>
+
+    <!-- =============== 4. CARDÁPIO COM ABAS =============== -->
+    <section id="cardapio" class="secao secao--chama">
+      <div class="container">
+        <h2 class="titulo">Nosso <span>Cardápio</span></h2>
+        <p class="assinatura">Comida boa, feita com carinho e muita qualidade!</p>
+
+        <!-- Botões das abas (JS troca o painel visível) -->
+        <div class="abas" role="tablist" aria-label="Categorias do cardápio">
+          <button role="tab" class="aba ativa" data-aba="almoco" aria-selected="true">Almoço</button>
+          <button role="tab" class="aba" data-aba="quentinhas" aria-selected="false">Quentinhas</button>
+          <button role="tab" class="aba" data-aba="galeto" aria-selected="false">Galeto</button>
+          <button role="tab" class="aba" data-aba="delivery" aria-selected="false">Delivery</button>
+        </div>
+
+        <!-- Painel: ALMOÇO (carnes + acompanhamentos) -->
+        <div class="painel ativo" id="almoco" role="tabpanel">
+          <div class="grade-2">
+            <article class="caixa">
+              <h3>Carnes</h3>
+              <ul class="lista-pontos">
+                <li>Filé</li><li>Bisteca</li><li>Frango ao forno</li>
+                <li>Peixe ao molho</li><li>Toscana mista</li><li>Toscana de frango</li>
+              </ul>
+            </article>
+            <article class="caixa">
+              <h3>Acompanhamentos</h3>
+              <ul class="lista-pontos lista-pontos--2col">
+                <li>Arroz branco</li><li>Arroz carioca</li><li>Macarrão</li>
+                <li>Feijão carioca</li><li>Feijão verde</li><li>Feijão preto</li>
+                <li>Vinagrete</li><li>Verdurinha na maionese</li><li>Farofa</li>
+                <li>Pirão de boi</li><li>Pirão de peixe</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <!-- Painel: QUENTINHAS -->
+        <div class="painel" id="quentinhas" role="tabpanel" hidden>
+          <div class="precos-grandes">
+            <div><small>Quentinha</small><b>R$ 13</b></div>
+            <div><small>Quentinha</small><b>R$ 17</b></div>
+            <div><small>Quentinha</small><b>R$ 20</b></div>
+          </div>
+          <article class="caixa caixa--destaque">
+            <h3>Quentinha Especial <b>R$ 20,00</b></h3>
+            <p>Carne de sol · Maminha na brasa · Costela ao bafo · Boi guisado · Mão de vaca</p>
+          </article>
+        </div>
+
+        <!-- Painel: GALETO -->
+        <div class="painel" id="galeto" role="tabpanel" hidden>
+          <p class="assinatura assinatura--sem-margem">Sabor de verdade, direto na brasa!</p>
+          <ul class="lista-preco">
+            <li><span>Galeto Completo</span><b>R$ 55,00</b></li>
+            <li><span>Galeto Simples</span><b>R$ 40,00</b></li>
+            <li><span>Meio Galeto Completo</span><b>R$ 40,00</b></li>
+            <li><span>Meio Galeto Simples</span><b>R$ 25,00</b></li>
+          </ul>
+        </div>
+
+        <!-- Painel: DELIVERY -->
+        <div class="painel" id="delivery" role="tabpanel" hidden>
+          <ul class="lista-preco">
+            <li><span>Frango a milanesa<small>Arroz à grega, purê e fritas</small></span><b>R$ 25,00</b></li>
+            <li><span>Frango parmegiana<small>Arroz branco, purê e fritas</small></span><b>R$ 23,00</b></li>
+            <li><span>Frango recheado empanado<small>Arroz branco, purê e fritas</small></span><b>R$ 30,00</b></li>
+            <li><span>Filé mignon parmegiana<small>Arroz branco, purê e fritas</small></span><b>R$ 27,00</b></li>
+            <li><span>Filé mignon à milanesa<small>Arroz à grega, purê e fritas</small></span><b>R$ 29,00</b></li>
+            <li><span>Filé de tilápia<small>Arroz branco, purê e salada</small></span><b>R$ 28,00</b></li>
+          </ul>
+          <a class="botao" data-whats="Olá! Quero fazer um pedido de delivery." href="#contato" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
+        </div>
+
+        <p class="entrega">🛵 Taxa de entrega: <b>R$ 1,00</b></p>
+      </div>
+    </section>
+
+    <!-- =============== 5. FAIXA ANIMADA (letreiro) =============== -->
+    <div class="letreiro" aria-hidden="true">
+      <div class="letreiro__trilho">
+        <span>Carne boa é aqui! 🔥 Sabor · Tradição · Família 🔥 Carne boa é aqui! 🔥 Sabor · Tradição · Família 🔥 </span>
+        <span>Carne boa é aqui! 🔥 Sabor · Tradição · Família 🔥 Carne boa é aqui! 🔥 Sabor · Tradição · Família 🔥 </span>
+      </div>
+    </div>
+
+    <!-- =============== 6. SOBRE =============== -->
+    <section id="sobre" class="secao">
+      <div class="container sobre">
+        <div class="sobre__texto">
+          <h2 class="titulo">Sobre a <span>Churrascaria Obodão</span></h2>
+          <p>Somos uma churrascaria que nasceu do amor pela boa comida e pela tradição do churrasco. Aqui, cada prato é preparado com ingredientes de qualidade, muito sabor e aquele toque especial que faz toda a diferença.</p>
+          <ul class="diferenciais">
+            <li><b>Qualidade</b> em tudo</li>
+            <li><b>Atendimento</b> de verdade</li>
+            <li><b>Sabor</b> incomparável</li>
+          </ul>
+        </div>
+        <!-- Duas fotos sobrepostas -->
+        <div class="sobre__fotos">
+          <img class="sobre__foto1" src="imagens/03-salao-dia.jpg" alt="Salão da churrascaria com mesas de madeira" loading="lazy">
+          <img class="sobre__foto2" src="imagens/04-salao-dia2.jpg" alt="Outro ângulo do salão" loading="lazy">
+          <p class="sobre__frase">Seja bem-vindo!</p>
+        </div>
+      </div>
+      <p class="faixa">Aqui o churrasco é mais que comida, é uma experiência!</p>
+    </section>
+
+    <!-- =============== 7. GALERIA (clique para ampliar) =============== -->
+    <section id="galeria" class="secao secao--madeira">
+      <div class="container">
+        <h2 class="titulo">Nossa <span>Galeria</span></h2>
+        <p class="assinatura">Toque numa foto para ampliar.</p>
+        <div class="galeria" id="galeria-grade">
+          <button class="foto foto--grande" data-i="0"><img src="imagens/08-peixe.jpg" alt="Tilápia frita inteira com salada" loading="lazy"></button>
+          <button class="foto" data-i="1"><img src="imagens/06-churrasco-prato.jpg" alt="Churrasco variado na travessa" loading="lazy"></button>
+          <button class="foto" data-i="2"><img src="imagens/11-churrasqueira.jpg" alt="Churrasqueira de tijolos com carnes na brasa" loading="lazy"></button>
+          <button class="foto foto--larga" data-i="3"><img src="imagens/09-prato-carne.jpg" alt="Prato com carne, arroz e salada" loading="lazy"></button>
+          <button class="foto" data-i="4"><img src="imagens/13-carne-brasa.jpg" alt="Carne grelhada na brasa" loading="lazy"></button>
+          <button class="foto" data-i="5"><img src="imagens/10-buffet.jpg" alt="Buffet com comida quente" loading="lazy"></button>
+          <button class="foto" data-i="6"><img src="imagens/12-arroz-farofa.jpg" alt="Arroz, farofa e vinagrete" loading="lazy"></button>
+          <button class="foto" data-i="7"><img src="imagens/07-acompanhamentos.jpg" alt="Acompanhamentos variados" loading="lazy"></button>
+        </div>
+        <p class="assinatura"><a href="https://instagram.com/churrascaria.obodao" target="_blank" rel="noopener">Veja mais no Instagram @churrascaria.obodao</a></p>
+      </div>
+    </section>
+
+    <!-- =============== 8. CONTATO + RESERVA =============== -->
+    <section id="contato" class="secao secao--noite">
+      <div class="container contato">
+        <div class="contato__texto">
+          <h2 class="titulo">Reserve <span>sua mesa</span></h2>
+          <p>Preencha e a gente abre o WhatsApp já com a mensagem pronta. É só enviar.</p>
+          <p class="contato__info">Endereço: [rua, número, cidade]<br>Horário: [dias e horários]<br>
+            <a href="https://instagram.com/churrascaria.obodao" target="_blank" rel="noopener">@churrascaria.obodao</a></p>
+        </div>
+
+        <!-- Formulário: o JS monta a mensagem e abre o WhatsApp -->
+        <form class="reserva" id="form-reserva">
+          <label>Seu nome<input type="text" name="nome" required autocomplete="name"></label>
+          <div class="reserva__duplo">
+            <label>Data<input type="date" name="data" required></label>
+            <label>Horário<input type="time" name="hora" required></label>
+          </div>
+          <label>Quantas pessoas?<input type="number" name="pessoas" min="1" max="60" value="2" required></label>
+          <button type="submit" class="botao botao--grande">Reservar pelo WhatsApp</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- =============== 9. RODAPÉ =============== -->
+  <footer class="rodape">
+    <img src="imagens/02-logo.png" alt="" width="90">
+    <p>© <span id="ano">2026</span> Churrascaria Obodão · Sabor, tradição, família.</p>
+  </footer>
+
+  <!-- Botão flutuante do WhatsApp (sempre visível) -->
+  <a class="zap" data-whats="Olá! Vim pelo site da Churrascaria Obodão." href="#contato" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.1c-.2.6-1.300 1.200-1.800 1.200-.5.1-1 .2-3.300-.7a11 11 0 0 1-4.600-4c-.4-.5-1.100-1.500-1.100-2.800s.7-1.900 1-2.200c.2-.3.500-.3.700-.3h.5c.2 0 .4 0 .6.500l.9 2.100c.1.200 0 .4-.1.600l-.4.500c-.2.200-.3.400-.1.700.2.300.8 1.300 1.700 2 1.100 1 2 1.300 2.300 1.400.3.100.5.100.7-.1l.9-1.100c.2-.3.400-.2.700-.1l2 1c.3.100.5.200.6.300.1.200.1.800-.2 1.400Z"/></svg>
+  </a>
+
+  <!-- Janela de ampliação das fotos (JS abre/fecha) -->
+  <dialog class="lightbox" id="lightbox">
+    <button class="lightbox__fechar" aria-label="Fechar">×</button>
+    <button class="lightbox__nav lightbox__ant" aria-label="Foto anterior">‹</button>
+    <img id="lightbox-img" alt="">
+    <button class="lightbox__nav lightbox__prox" aria-label="Próxima foto">›</button>
+  </dialog>
+
+</body>
+</html>

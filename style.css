@@ -1,0 +1,249 @@
+/* =====================================================================
+   ESTILOS – Churrascaria Obodão (versão refinada)
+   Índice: 1 Variáveis · 2 Base · 3 Botões · 4 Cabeçalho · 5 Hero
+           6 Atalhos · 7 Seções · 8 Cardápio · 9 Letreiro · 10 Sobre
+           11 Galeria · 12 Contato · 13 Rodapé/WhatsApp · 14 Lightbox
+           15 Celular · 16 Acessibilidade
+   ===================================================================== */
+
+/* ---------- 1. VARIÁVEIS (mude cores e fontes aqui) ---------- */
+:root {
+  --preto: #0a0807;
+  --carvao: #17110f;
+  --brasa: #5a0f0f;
+  --vermelho: #c0161f;
+  --laranja: #f5a31a;
+  --laranja-claro: #ffc04d;
+  --branco: #f7f2ec;
+  --fonte-titulo: "Anton", Impact, sans-serif;
+  --fonte-script: "Kaushan Script", cursive;
+  --fonte-texto: "Poppins", Arial, sans-serif;
+  --raio: 12px;
+}
+
+/* ---------- 2. BASE ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body { background: var(--preto); color: var(--branco); font-family: var(--fonte-texto); line-height: 1.6; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+ul { list-style: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.container { width: min(1100px, 92%); margin-inline: auto; }
+:focus-visible { outline: 3px solid var(--laranja); outline-offset: 3px; }
+
+/* Link "pular para o conteúdo": invisível até receber foco do teclado */
+.pular { position: absolute; left: -999px; top: 8px; background: var(--laranja); color: #000; padding: 8px 14px; border-radius: 6px; z-index: 100; }
+.pular:focus { left: 8px; }
+
+/* ---------- 3. BOTÕES ---------- */
+.botao {
+  display: inline-block; background: var(--laranja); color: #1a0f00; font-weight: 600;
+  padding: 12px 26px; border-radius: 999px; border: 2px solid var(--laranja); text-decoration: none;
+  transition: transform .2s, background .2s, box-shadow .2s;
+}
+.botao:hover { background: var(--laranja-claro); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(245,163,26,.35); }
+.botao--grande { padding: 15px 34px; font-size: 1.05rem; }
+.botao--vazado { background: transparent; color: var(--laranja); }
+.botao--vazado:hover { background: var(--laranja); color: #1a0f00; }
+
+/* ---------- 4. CABEÇALHO ---------- */
+.topo { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .3s, box-shadow .3s; }
+.topo.rolou { background: rgba(10,8,7,.94); backdrop-filter: blur(8px); box-shadow: 0 2px 20px rgba(0,0,0,.6); } /* classe colocada pelo JS */
+.topo__linha { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 8px; }
+.logo img { height: 62px; width: auto; transition: height .3s; }
+.topo.rolou .logo img { height: 48px; }
+
+.menu { display: flex; align-items: center; gap: 30px; }
+.menu a:not(.botao) { text-decoration: none; font-size: .82rem; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; padding-block: 6px; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+.menu a:not(.botao):hover, .menu a.atual { color: var(--laranja); border-color: var(--laranja); } /* .atual = seção visível */
+.menu__reserva { display: none; }
+
+/* Hambúrguer (escondido no desktop) */
+.burger { display: none; background: none; border: 0; width: 44px; height: 44px; position: relative; }
+.burger span { position: absolute; left: 10px; right: 10px; height: 3px; background: var(--branco); border-radius: 2px; transition: transform .3s, opacity .3s, top .3s; }
+.burger span:nth-child(1) { top: 14px; } .burger span:nth-child(2) { top: 21px; } .burger span:nth-child(3) { top: 28px; }
+.burger[aria-expanded="true"] span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
+
+/* ---------- 5. HERO ---------- */
+.hero { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; isolation: isolate; }
+.hero__fundo {
+  position: absolute; inset: -6% 0; z-index: -3;
+  background: url("imagens/01-hero.jpg") center / cover no-repeat, radial-gradient(circle at 80% 30%, #c2410c, var(--brasa) 50%, var(--preto));
+  transform: translateY(var(--py, 0px)) scale(1.05);       /* --py muda com a rolagem (parallax) */
+  animation: respirar 18s ease-in-out infinite alternate;  /* zoom lento, dá vida à foto */
+}
+@keyframes respirar { to { scale: 1.08; } }
+.hero::before { /* escurece a esquerda para o texto ficar legível */
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background: linear-gradient(90deg, rgba(10,8,7,.94) 0%, rgba(10,8,7,.6) 50%, rgba(10,8,7,.05) 100%), linear-gradient(0deg, var(--preto), transparent 25%);
+}
+.hero__brasas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+.hero__conteudo { padding-top: 110px; padding-bottom: 80px; }
+.hero__selo { color: var(--laranja); letter-spacing: 5px; font-size: .78rem; text-transform: uppercase; margin-bottom: 8px; }
+.hero__titulo { display: block; font-family: var(--fonte-titulo); font-weight: 400; text-transform: uppercase; font-size: clamp(3rem, 11vw, 7.5rem); line-height: .95; }
+.hero__nome { display: block; font-family: var(--fonte-script); font-weight: 400; color: var(--laranja); font-size: clamp(3.6rem, 12vw, 8rem); line-height: 1; rotate: -3deg; transform-origin: left; margin-bottom: 16px; text-shadow: 0 0 40px rgba(245,163,26,.35); }
+.hero__texto { max-width: 26ch; font-size: 1.3rem; margin-bottom: 28px; }
+.hero__acoes { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero__frase { position: absolute; right: 6%; bottom: 16%; font-family: var(--fonte-script); font-size: clamp(1.4rem, 3vw, 2.4rem); rotate: -8deg; border-bottom: 4px solid var(--laranja); text-shadow: 0 2px 10px #000; }
+
+/* Seta animada "role para baixo" */
+.hero__descer { position: absolute; left: 50%; bottom: 22px; width: 26px; height: 26px; margin-left: -13px; border-right: 3px solid var(--laranja); border-bottom: 3px solid var(--laranja); rotate: 45deg; animation: descer 1.6s ease-in-out infinite; }
+@keyframes descer { 50% { translate: 6px 6px; opacity: .4; } }
+
+/* Única animação de entrada do site: o hero aparece em sequência ao carregar */
+.hero__selo, .hero__titulo, .hero__nome, .hero__texto, .hero__acoes, .hero__frase { animation: entrar .9s cubic-bezier(.2,.8,.2,1) backwards; }
+.hero__titulo { animation-delay: .15s; } .hero__nome { animation-delay: .35s; }
+.hero__texto { animation-delay: .6s; } .hero__acoes { animation-delay: .75s; } .hero__frase { animation-delay: 1s; }
+@keyframes entrar { from { opacity: 0; translate: 0 30px; } }
+
+/* ---------- 6. ATALHOS ---------- */
+.atalhos { display: flex; justify-content: center; gap: 20px; padding-block: 50px 20px; flex-wrap: wrap; }
+.atalhos a { border-radius: var(--raio); overflow: hidden; width: 200px; transition: transform .3s, box-shadow .3s, opacity .7s, translate .7s; }
+.atalhos img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .5s; }
+.atalhos a:hover { transform: translateY(-8px); box-shadow: 0 14px 30px rgba(245,163,26,.25); }
+.atalhos a:hover img { transform: scale(1.06); }
+
+/* ---------- 7. SEÇÕES E TÍTULOS ---------- */
+.secao { padding-block: 90px; position: relative; }
+.titulo { font-family: var(--fonte-titulo); font-weight: 400; font-size: clamp(2rem, 5vw, 3.2rem); text-transform: uppercase; line-height: 1.1; }
+.titulo span { font-family: var(--fonte-script); text-transform: none; color: var(--laranja); }
+.assinatura { font-family: var(--fonte-script); color: var(--laranja); font-size: 1.3rem; margin: 10px 0 34px; }
+.assinatura--sem-margem { margin-top: 0; }
+.assinatura a { text-decoration: none; } .assinatura a:hover { text-decoration: underline; }
+
+/* Fundos temáticos usando as texturas do kit */
+.secao--chama { background: linear-gradient(rgba(10,8,7,.82), rgba(10,8,7,.9)), url("imagens/17-textura-chama.jpg") center / cover; }
+.secao--madeira { background: linear-gradient(rgba(10,8,7,.8), rgba(10,8,7,.92)), url("imagens/18-textura-madeira.jpg") center / cover; }
+.secao--noite { background: linear-gradient(rgba(10,8,7,.82), rgba(10,8,7,.9)), url("imagens/05-salao-noite.jpg") center / cover fixed; }
+
+/* Efeito de revelar ao rolar (só em cards e fotos; JS adiciona .visivel) */
+.revelar { opacity: 0; translate: 0 24px; transition: opacity .7s, translate .7s; transition-delay: calc(var(--i, 0) * 80ms); }
+.revelar.visivel { opacity: 1; translate: 0 0; }
+
+/* ---------- 8. CARDÁPIO ---------- */
+.abas { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
+.aba { background: transparent; border: 2px solid #4a2a22; padding: 10px 24px; border-radius: 999px; font-weight: 600; transition: all .25s; }
+.aba:hover { border-color: var(--laranja); }
+.aba.ativa { background: var(--laranja); border-color: var(--laranja); color: #1a0f00; }
+
+.painel { display: none; }
+.painel.ativo { display: block; animation: trocar .45s ease; }
+@keyframes trocar { from { opacity: 0; translate: 0 14px; } }
+
+.grade-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+.caixa { background: rgba(23,17,15,.9); border: 1px solid #3a1a14; border-top: 4px solid var(--vermelho); border-radius: var(--raio); padding: 26px; }
+.caixa h3 { font-family: var(--fonte-titulo); font-weight: 400; color: var(--laranja); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 14px; }
+.caixa--destaque { margin-top: 22px; border-color: var(--vermelho); background: linear-gradient(135deg, #2b0e0b, var(--carvao)); }
+.caixa--destaque h3 { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+
+.lista-pontos li { position: relative; padding: 5px 0 5px 20px; }
+.lista-pontos li::before { content: ""; position: absolute; left: 0; top: 15px; width: 8px; height: 8px; border-radius: 50%; background: var(--vermelho); }
+.lista-pontos--2col { columns: 2; column-gap: 24px; }
+.lista-pontos--2col li { break-inside: avoid; }
+
+/* Quentinhas: preços grandes */
+.precos-grandes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.precos-grandes div { text-align: center; padding: 26px 10px; background: rgba(23,17,15,.9); border: 1px solid #3a1a14; border-radius: var(--raio); transition: transform .25s, border-color .25s, opacity .7s, translate .7s; }
+.precos-grandes div:hover { transform: translateY(-5px); border-color: var(--laranja); }
+.precos-grandes small { display: block; opacity: .7; }
+.precos-grandes b { font-family: var(--fonte-titulo); font-weight: 400; font-size: clamp(2rem, 6vw, 3.4rem); color: var(--laranja); }
+
+/* Listas de preço (galeto e delivery) */
+.lista-preco { display: grid; gap: 12px; max-width: 780px; margin-bottom: 26px; }
+.lista-preco li { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 22px; background: rgba(0,0,0,.45); border-left: 5px solid var(--vermelho); border-radius: 8px; font-weight: 600; transition: transform .25s, border-color .25s, background .25s; }
+.lista-preco li:hover { transform: translateX(6px); border-color: var(--laranja); background: rgba(90,15,15,.45); }
+.lista-preco b { font-family: var(--fonte-titulo); font-weight: 400; color: var(--laranja); font-size: 1.4rem; white-space: nowrap; }
+.lista-preco small { display: block; font-weight: 400; font-size: .85rem; opacity: .75; }
+
+.entrega { display: inline-block; margin-top: 30px; padding: 12px 22px; border: 1px solid var(--laranja); border-radius: 10px; }
+.entrega b { color: var(--laranja); }
+
+/* ---------- 9. LETREIRO (faixa que corre) ---------- */
+.letreiro { overflow: hidden; white-space: nowrap; padding-block: 16px; background: url("imagens/19-textura-brasa.jpg") center / cover, var(--brasa); border-block: 2px solid var(--laranja); }
+.letreiro__trilho { display: inline-flex; animation: correr 28s linear infinite; }
+.letreiro span { font-family: var(--fonte-script); font-size: 1.5rem; color: var(--laranja); padding-right: 30px; text-shadow: 0 2px 8px #000; }
+@keyframes correr { to { translate: -50% 0; } }
+.letreiro:hover .letreiro__trilho { animation-play-state: paused; }
+
+/* ---------- 10. SOBRE ---------- */
+.sobre { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.sobre__texto p { margin-top: 18px; max-width: 54ch; }
+.diferenciais { display: flex; gap: 26px; margin-top: 30px; flex-wrap: wrap; }
+.diferenciais li { border-left: 3px solid var(--laranja); padding-left: 12px; font-size: .9rem; }
+.diferenciais b { display: block; color: var(--laranja); text-transform: uppercase; }
+
+.sobre__fotos { position: relative; padding-bottom: 60px; }
+.sobre__foto1 { width: 85%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--raio); box-shadow: 0 20px 40px rgba(0,0,0,.6); }
+.sobre__foto2 { position: absolute; right: 0; bottom: 0; width: 52%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--raio); border: 5px solid var(--preto); box-shadow: 0 20px 40px rgba(0,0,0,.6); transition: transform .4s; }
+.sobre__fotos:hover .sobre__foto2 { transform: translate(-8px, -8px) rotate(-2deg); }
+.sobre__frase { position: absolute; left: 6%; bottom: 8px; font-family: var(--fonte-script); font-size: 2rem; rotate: -5deg; color: var(--laranja); text-shadow: 0 2px 8px #000; }
+.faixa { margin-top: 70px; padding: 24px 4%; text-align: center; background: var(--brasa); font-family: var(--fonte-script); font-size: clamp(1.2rem, 3vw, 1.9rem); color: var(--laranja); }
+
+/* ---------- 11. GALERIA (mosaico) ---------- */
+.galeria { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; grid-auto-flow: dense; margin-bottom: 10px; }
+.foto { position: relative; padding: 0; border: 0; border-radius: var(--raio); overflow: hidden; aspect-ratio: 1 / 1; background: var(--carvao); cursor: zoom-in; }
+.foto--grande { grid-column: span 2; grid-row: span 2; }
+.foto--larga { grid-column: span 2; aspect-ratio: auto; }
+.foto img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+.foto::after { content: "Ampliar"; position: absolute; inset: auto 0 0 0; padding: 30px 12px 12px; text-align: center; font-weight: 600; font-size: .85rem; background: linear-gradient(transparent, rgba(0,0,0,.85)); opacity: 0; translate: 0 10px; transition: .3s; }
+.foto:hover img { transform: scale(1.08); }
+.foto:hover::after, .foto:focus-visible::after { opacity: 1; translate: 0 0; }
+
+/* ---------- 12. CONTATO ---------- */
+.contato { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+.contato__texto p { margin-top: 14px; max-width: 44ch; }
+.contato__info { opacity: .85; }
+.contato__info a { color: var(--laranja); }
+.reserva { display: grid; gap: 16px; padding: 30px; background: rgba(10,8,7,.85); border: 1px solid #3a1a14; border-top: 4px solid var(--laranja); border-radius: var(--raio); }
+.reserva label { display: grid; gap: 6px; font-size: .85rem; font-weight: 600; }
+.reserva__duplo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.reserva input { width: 100%; padding: 12px 14px; font: inherit; color: var(--branco); background: var(--carvao); border: 1px solid #4a2a22; border-radius: 8px; color-scheme: dark; transition: border-color .2s, box-shadow .2s; }
+.reserva input:focus { outline: 0; border-color: var(--laranja); box-shadow: 0 0 0 3px rgba(245,163,26,.25); }
+.reserva .botao { width: 100%; border: 2px solid var(--laranja); }
+
+/* ---------- 13. RODAPÉ E WHATSAPP FLUTUANTE ---------- */
+.rodape { text-align: center; padding: 34px 20px; font-size: .85rem; background: #000; border-top: 1px solid #2a1d18; display: grid; justify-items: center; gap: 10px; }
+.zap { position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: #25d366; color: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.5); transition: transform .2s; }
+.zap:hover { transform: scale(1.1); }
+.zap::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366; animation: pulso 2.4s ease-out infinite; }
+@keyframes pulso { to { transform: scale(1.7); opacity: 0; } }
+
+/* ---------- 14. LIGHTBOX ---------- */
+.lightbox { border: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: 100%; height: 100%; margin: 0; place-items: center; }
+.lightbox[open] { display: grid; animation: trocar .3s; }
+.lightbox::backdrop { background: rgba(0,0,0,.92); }
+.lightbox img { max-width: 90vw; max-height: 86vh; border-radius: var(--raio); box-shadow: 0 0 60px rgba(245,163,26,.2); }
+.lightbox button { position: absolute; background: rgba(0,0,0,.6); border: 1px solid #4a2a22; color: var(--branco); width: 48px; height: 48px; border-radius: 50%; font-size: 1.8rem; line-height: 1; transition: background .2s; }
+.lightbox button:hover { background: var(--laranja); color: #000; }
+.lightbox__fechar { top: 18px; right: 18px; }
+.lightbox__ant { left: 18px; top: 50%; translate: 0 -50%; }
+.lightbox__prox { right: 18px; top: 50%; translate: 0 -50%; }
+
+/* ---------- 15. CELULAR ---------- */
+@media (max-width: 860px) {
+  .topo__reserva { display: none; }
+  .burger { display: block; }
+  /* Menu vira painel que desce do topo */
+  .menu { position: fixed; inset: 0 0 auto 0; top: 0; flex-direction: column; justify-content: center; gap: 22px; height: 100svh; background: rgba(10,8,7,.97); translate: 0 -100%; transition: translate .4s; padding: 90px 20px 20px; z-index: -1; }
+  .menu.aberto { translate: 0 0; }
+  .menu a:not(.botao) { font-size: 1.2rem; }
+  .menu__reserva { display: inline-block; }
+  .burger { z-index: 2; }
+  .sobre, .contato { grid-template-columns: 1fr; gap: 40px; }
+  .galeria { grid-template-columns: repeat(2, 1fr); }
+  .hero__frase { display: none; }
+  .secao { padding-block: 64px; }
+  .secao--noite { background-attachment: scroll; }
+  .lista-pontos--2col { columns: 1; }
+  .precos-grandes { grid-template-columns: 1fr; }
+}
+
+/* ---------- 16. ACESSIBILIDADE: quem prefere menos movimento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .revelar { opacity: 1; translate: 0 0; }
+}
